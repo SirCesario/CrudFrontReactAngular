@@ -1,6 +1,7 @@
 package com.semillero.fullstack.controller;
 
 
+import com.semillero.fullstack.clasess.NotExistClient;
 import com.semillero.fullstack.entity.Client;
 import com.semillero.fullstack.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,41 +36,29 @@ public class ClientController {
                 message = "Cliente Creado Correctamente";
                 return ResponseEntity.status(status).body(message);
             }
-
-//            } else {
-//                status = HttpStatus.BAD_REQUEST;
-//                message = "No se puede crear un cliente si es menor de edad ";
-//                return ResponseEntity.status(status).body(message);
-//            }
         } catch (Exception e) {
             status = HttpStatus.BAD_REQUEST;
             System.out.println(e.getMessage());
             return ResponseEntity.status(status).body(e.getMessage());
-
         }
         return null;
     }
 
     @GetMapping("/client/{clientId}")
     @ResponseBody
-    public  ResponseEntity <Object> readClient(@PathVariable("clientId") Long clientId){
+    public  ResponseEntity <Object> readClient(@PathVariable("clientId") Long clientId) throws Exception{
         Object response = null;
         HttpStatus status = null;
         String message = null;
         try {
             response = clientService.readClient(clientId);
-            if (response!= null) {
-                status = HttpStatus.OK;
-                message = "Cliente Encontrado";
-                return ResponseEntity.status(status).body(message);
-            }else {
-                status = HttpStatus.NOT_FOUND;
-                message = "No se encontró ningun cliente con ese ID";
-                return ResponseEntity.status(status).body(message);
-            }
-        }catch (Exception e) {
-        System.out.println(e.getMessage());
-            return null;
+            status = HttpStatus.OK;
+            message = "Cliente Encontrado";
+            return ResponseEntity.status(status).body(response);
+        }catch (Exception e){
+            status = HttpStatus.BAD_REQUEST;
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(status).body(e.getMessage());
         }
     }
 
@@ -80,57 +69,42 @@ public class ClientController {
    }
 
 
-
-
-
     @PutMapping("/client/{clientId}")
     @ResponseBody
-    public ResponseEntity <Object> updateClient(@PathVariable(name = "clientId") Long clientId,@RequestBody Client client){
+    public ResponseEntity <Object> updateClient(@PathVariable(name = "clientId") Long clientId,@RequestBody Client client) throws NotExistClient {
         HttpStatus status = null;
         String message = null;
         Object response = null;
        try {
            client.setClientId(clientId);
-           Client clientNew = this.clientService.updateClient(client);
-           if (clientNew != null)
-           return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Alert("Cliente Actualizado correctamente"));
-           else {
-               return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Alert("No se puede actualizar Cliente"));
+           Client client1 = this.clientService.updateClient(clientId,client);
+           if(client1 != null){
+               return ResponseEntity.status(HttpStatus.ACCEPTED).body(client1);
            }
-       }catch (Exception e) {
-       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Alert("No es posible procesar su solicitud"));
+       } catch (Exception e) {
+           status = HttpStatus.BAD_REQUEST;
+           System.out.println(e.getMessage());
+           return ResponseEntity.status(status).body(e.getMessage());
        }
-   }
+       return null;
+    }
 
     @DeleteMapping("/client/{clientId}")
     @ResponseBody
-    public ResponseEntity <Object> deleteClient(@PathVariable ("clientId") Long clientId){
+    public ResponseEntity <Object> deleteClient(@PathVariable ("clientId") Long clientId) {
         Object response = null;
         HttpStatus status = null;
         String message = null;
         try {
             if (clientService.deleteClient(clientId)) {
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Alert("El cliente con el ID" + " " + clientId + " " + "fue eliminado correctamente"));
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Alert("No se puede eliminar un cliente si tiene cuentas Activas"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
+            status = HttpStatus.BAD_REQUEST;
             System.out.println(e.getMessage());
-            return null;
-
+            return ResponseEntity.status(status).body(e.getMessage());
         }
-
-
-
-
+        return  null;
     }
-
-
-
-
-
-
-
-
 
 }

@@ -10,10 +10,10 @@ public interface ClientService  {
 
     Client createClient(Client client) throws Exception;
 
-    Client readClient(Long client);
+    Client readClient(Long client)throws Exception;
 
-    Client updateClient(Client client);
-    boolean deleteClient(Long clientId);
+    Client updateClient(Long clientId,Client client) throws Exception;
+    boolean deleteClient(Long clientId) throws Exception;
 
 
     ArrayList <Client> findAll();

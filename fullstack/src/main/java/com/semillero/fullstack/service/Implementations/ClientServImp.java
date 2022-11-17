@@ -1,18 +1,19 @@
 package com.semillero.fullstack.service.Implementations;
 
+import com.semillero.fullstack.clasess.ClientConnectedAccounts;
+import com.semillero.fullstack.clasess.NotCreateOlderClient;
+import com.semillero.fullstack.clasess.NotExistClient;
 import com.semillero.fullstack.entity.Account;
 import com.semillero.fullstack.entity.Client;
 import com.semillero.fullstack.repository.AccountRepository;
 import com.semillero.fullstack.repository.ClientRepository;
 import com.semillero.fullstack.service.ClientService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+
 
 @Service
 public class ClientServImp implements ClientService {
@@ -29,7 +30,7 @@ public class ClientServImp implements ClientService {
            if (this.OlderClient(client)) {
                return clientRepository.save(client);
            }else {
-               throw new Exception("Cliente menor de edad");
+               throw new NotCreateOlderClient("No se puede Crear un Cliente si es Menor de Edad");
            }
 
     }
@@ -46,10 +47,13 @@ public class ClientServImp implements ClientService {
 
 
     @Override
-    public Client readClient(Long client) {
-        return clientRepository.findByClientId(client);
+    public Client readClient(Long clientId) throws Exception{
+        if (clientRepository.existsById(clientId)){
+            return clientRepository.findByClientId(clientId);
+        }else {
+            throw new NotExistClient("No existe un Cliente con ese Id");
+        }
     }
-
 
     @Override
     public ArrayList<Client> findAll() {
@@ -58,20 +62,23 @@ public class ClientServImp implements ClientService {
 
 
     @Override
-    public Client updateClient(Client client) {
-        return clientRepository.save(client);
+    public Client updateClient(Long clientId,Client client) throws Exception {
+        if(clientRepository.existsById(clientId)){
+            return clientRepository.save(client);
+        }
+        throw new NotExistClient("No se puede Actualizar Cliente con ese ID");
     }
+
+
+
 
     @Override
-    public boolean deleteClient(Long clientId) {
-        Logger logger = LoggerFactory.getLogger(ClientServImp.class);
+    public boolean deleteClient(Long clientId) throws Exception {
         ArrayList <Account> accounts = accountRepository.findAllByClientId(clientId);
-        if (accounts.size() == 1) {
+        if (accounts.isEmpty()){
             clientRepository.deleteById(clientId);
-        }return true;
+        }
+        throw new ClientConnectedAccounts("No se puede Eliminar un cliente si tiene Cuentas Activas");
     }
-
-
-
 
 }
