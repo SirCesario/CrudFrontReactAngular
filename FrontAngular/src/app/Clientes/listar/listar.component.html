@@ -1,0 +1,51 @@
+            <div class="container">
+                <h3 class="text-center">Clientes Creados</h3>
+            </div>
+            <table class="table table-striped">
+                <thead class="table table-dark">
+                    <tr>
+
+                        <th>ID de Cliente</th>
+                        <th>Tipo de Documento</th>
+                        <th>Numero de Documento</th>
+                        <th>Estado de Cliente</th>
+                        <th>Tipo de Cliente</th>
+                        <th>Dirección</th>
+                        <th>Telefono</th>
+                        <th>Correo</th>
+                        <th>Primer Nombre</th>
+                        <th>Segundo Nombre</th>
+                        <th>Primer Apellido</th>
+                        <th>Segundo Apellido</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Usuario de Creacion</th>
+                        <th>Usuario de Modificacion</th>
+                        <th>ACCIONES</th>
+
+                    </tr>
+                </thead>
+                        <tbody class="table-hover">
+                        <tr *ngFor="let client of client" class="text-center">
+
+                        <td>{{client.clientId}}</td>
+                        <td>{{client.typeId}}</td>
+                        <td>{{client.numberId}}</td>
+                        <td>{{client.statusClient}}</td>
+                        <td>{{client.typeClient}}</td>
+                        <td>{{client.address}}</td>
+                        <td>{{client.phone}}</td>
+                        <td>{{client.mail}}</td>
+                        <td>{{client.firstName}}</td>
+                        <td>{{client.secondName}}</td>
+                        <td>{{client.firstLastName}}</td>
+                        <td>{{client.secondLastName}}</td>
+                        <td>{{client.birthday|date:'dd-MM-YYYY'}}</td>
+                        <td>{{client.userCreation}}</td>
+                        <td>{{client.userModification}}</td>
+                        <td>
+                            <button (click)="editar(client.clientId)" class="btn btn-primary">Editar</button>
+                            <button (click)="eliminar(client.clientId)" class="btn btn-danger" >Eliminar</button>
+                        </td>
+                </tbody>
+            </table>
+

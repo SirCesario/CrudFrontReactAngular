@@ -1,0 +1,44 @@
+.form-cuenta{
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 590px;
+    height: 150px !important;
+    border: 5px solid #b3b3b3;
+    border-radius: 10px;
+    transition: .5s ease;
+    padding: 130px;
+    font-size: 14px;
+    
+}
+.form-cuenta:hover{
+    box-shadow: 3px 3px 50px #a87404;
+}
+
+.table-cuenta {
+    margin-top: 300px;
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid rgba(173, 127, 83, 0.932);
+    color: rgb(17, 16, 16);
+    background-color:rgba(223, 104, 7, 0.904);
+    text-align: center;
+  }
+
+  .form-title { 
+    font-size: 40px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-align: center;
+    margin: 0;
+    color:#ffff;
+    align-content: center;
+    margin-top: 20px;
+}
+.input-text-cuenta{
+    margin-top: -245px;
+    align-content: center;
+    
+    }

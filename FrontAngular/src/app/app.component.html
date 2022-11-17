@@ -1,0 +1,18 @@
+
+<div style="text-align:center">
+  <h1>
+    BANCO VAJU
+  </h1>
+  <h3>
+    Sistema de Gestion
+  </h3>
+</div>
+<div class="container">
+  <button (click)="Listar()" class="btn btn-primary" style="margin-left:10px">Ver Listado de CLientes</button>
+  <button (click)="Crear()" class="btn btn-warning" style="margin-left:10px">Crear Cliente</button>
+  <button (click)="ListarCuentas()" class="btn btn-success" style="margin-left:10px">Ir a Listado de Cuentas</button>
+  <button (click)="CrearCuentas()" class="btn btn-info" style="margin-left:10px">Crear Cuenta</button>
+  <button (click)="ListarMovimientos()" class="btn btn-dark" style="margin-left:10px">Ver Movimientos</button>
+  <button (click)="CrearMovimientos()" class="btn btn-light" style="margin-left:10px">Crear Movimiento</button>
+</div>
+<router-outlet></router-outlet>

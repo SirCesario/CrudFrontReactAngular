@@ -1,0 +1,48 @@
+<div class="col-md-3 offset-md-3">
+  <h3 class="text-center">Registro de  Movimientos</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="accountId" >Cuenta ID</label>
+      <input type="number" class="form-control" id="accountId" [(ngModel)]="transaction.accountId" name="accountId" readonly>
+    </div>
+    <div class="form-group">
+      <label for="transactionId" >Movimiento ID</label>
+      <input type="number" class="form-control" id="transactionId" [(ngModel)]="transaction.transactionId" name="transactionId" readonly>
+    </div>
+    <div class="form-group">
+      <label for="type" >Tipo</label>
+      <select class="form-control"id="type" [(ngModel)]="transaction.type" name="type">
+        <option value="Abono">Abono</option>
+        <option value="Cancelacion">Cancelacion</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="value" >Valor</label>
+      <input class="form-control"id="value" [(ngModel)]="transaction.value" name="value">
+    </div>
+    <div class="form-group">
+      <label for="period" >Periodo</label>
+      <select class="form-control"id="period" [(ngModel)]="transaction.period" name="period">
+        <option value="Quincenal">Quincenal</option>
+        <option value="Mensual">Mensual</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="status" >Estado</label>
+      <select class="form-control"id="status" [(ngModel)]="transaction.status" name="status">
+        <option value="Activo">Activo</option>
+        <option value="Inactivo">Inactivo</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="userCreation" >Digite su Usuario</label>
+      <input type="text" class="form-control" id="userCreation" [(ngModel)]="transaction.userCreation" name="userCreation">
+    </div>
+    <div class="form-group">
+      <label for="userModification" >Confirme su Usuario</label>
+      <input type="text" class="form-control" id="userModification" [(ngModel)]="transaction.userModification" name="userModification">
+    </div>
+     <br>
+    <button class="btn btn-success" type="submit" >Guardar</button>
+  </form>
+</div>
